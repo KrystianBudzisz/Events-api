@@ -27,7 +27,7 @@ public class Event {
 
     private int numberOfPeople;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "place_id")
     private Place place;
 

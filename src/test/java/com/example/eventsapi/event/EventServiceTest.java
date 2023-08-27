@@ -147,5 +147,21 @@ public class EventServiceTest {
         assertEquals(eventDto, result);
     }
 
+    @Test
+    public void testCreateEvent_ExceedsPlaceCapacity() {
+        CreateEventCommand createEventCommand = new CreateEventCommand();
+        createEventCommand.setNumberOfPeople(100);
+        createEventCommand.setPlaceCode("PLACE123");
+
+        Place mockedPlace = new Place();
+        mockedPlace.setCapacity(50);
+
+        when(placeRepository.findByCode("PLACE123")).thenReturn(mockedPlace);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            eventService.createEvent(createEventCommand);
+        }, "Number of people exceeds place capacity!");
+    }
+
 
 }

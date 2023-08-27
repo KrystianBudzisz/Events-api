@@ -33,6 +33,10 @@ public class EventService {
 
         Place place = placeRepository.findByCode(createEventCommand.getPlaceCode());
 
+        if (createEventCommand.getNumberOfPeople() > place.getCapacity()) {
+            throw new IllegalArgumentException("Number of people exceeds place capacity!");
+        }
+
         Event event = new Event();
         event.setName(createEventCommand.getName());
         event.setDate(createEventCommand.getDate());
